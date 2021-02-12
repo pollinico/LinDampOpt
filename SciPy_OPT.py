@@ -1,5 +1,5 @@
 ''' 
-Nicolò Pollini, Feb 2021
+Nicolò Pollini, May 2021
 Copenhagen, Denmark
 '''
 #--------------------------------------
@@ -90,7 +90,7 @@ def runOptimization(params):
             xlast = x
         return dglast
     # ----------------------
-    nlc = NonlinearConstraint(con, lb=-np.inf, ub=1.0, jac=jac, keep_feasible=True)
+    nlc = NonlinearConstraint(con, lb=-np.inf, ub=1.0, jac=jac)
     options = {'disp': True}
     bounds = Bounds(lb, ub, keep_feasible=True)
     sol = minimize(obj, x0, jac=True, constraints=nlc, options=options, bounds=bounds, callback=callback, method='SLSQP')
@@ -102,7 +102,7 @@ def runOptimization(params):
 
 # Main function
 if __name__ == "__main__":
-    x0 = [0.95, 0.95]
+    x0 = [.95, .95]
     lb = [0., 0.]
     ub = [1., 1.]
     params = {'x0': x0, 
@@ -118,7 +118,7 @@ if __name__ == "__main__":
     plt.show()
 #--------------------------------------
 '''
-#%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+##%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 # This code was written by Nicolò Pollini,                                %
 # Department of Wind Energy,                                              %  
 # Technical University of Denmark.                                        %
@@ -130,5 +130,5 @@ if __name__ == "__main__":
 # The author reserves all rights but does not guarantee that the code is  %
 # free from errors. Furthermore, the author shall not be liable in any    %
 # event caused by the use of the program.                                 %
-#%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+##%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 '''
