@@ -92,7 +92,7 @@ def runOptimization(params):
     # ----------------------
     nlc = NonlinearConstraint(con, lb=-np.inf, ub=1.0, jac=jac, keep_feasible=True)
     options = {'disp': True}
-    bounds=Bounds(lb, ub, keep_feasible=True)
+    bounds = Bounds(lb, ub, keep_feasible=True)
     sol = minimize(obj, x0, jac=True, constraints=nlc, options=options, bounds=bounds, callback=callback, method='SLSQP')
     print("x =", sol.x)
     print("f =", sol.fun)
