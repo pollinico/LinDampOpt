@@ -91,7 +91,7 @@ def runOptimization(params):
         return dglast
     # ----------------------
     nlc = NonlinearConstraint(con, lb=-np.inf, ub=1.0, jac=jac)
-    options = {'disp': True}
+    options = {'disp': True, 'ftol': 1e-7}
     bounds = Bounds(lb, ub, keep_feasible=True)
     sol = minimize(obj, x0, jac=True, constraints=nlc, options=options, bounds=bounds, callback=callback, method='SLSQP')
     print("x =", sol.x)
