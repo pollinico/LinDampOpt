@@ -261,7 +261,7 @@ if __name__ == '__main__':
 	main(x)
 
 '''
-#%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+##%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 # This code was written by Nicolò Pollini,                                %
 # Department of Wind Energy,                                              %  
 # Technical University of Denmark.                                        %
@@ -273,5 +273,5 @@ if __name__ == '__main__':
 # The author reserves all rights but does not guarantee that the code is  %
 # free from errors. Furthermore, the author shall not be liable in any    %
 # event caused by the use of the program.                                 %
-#%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+##%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 '''
