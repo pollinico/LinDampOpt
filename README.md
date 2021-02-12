@@ -7,5 +7,8 @@ The structure is subjected to a realistic ground acceleration record.
 The gradient is calculated with an adjoint method.  
 For details on the adjoint sensitivity analysis see:  
 
-
-Pollini, N. (2020). Fail‐safe optimization of viscous dampers for seismic retrofitting. Earthquake Engineering & Structural Dynamics, 49(15), 1599-1618.
+Pollini, N. (2020). Fail‐safe optimization of viscous dampers for seismic retrofitting.  
+Earthquake Engineering & Structural Dynamics, 49(15), 1599-1618.  
+  
+  
+Main file to be run: SciPy_OPT.py
