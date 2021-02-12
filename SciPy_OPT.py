@@ -53,7 +53,6 @@ def runOptimization(params):
         gHist.append(g[0,0])
         dg = Opt.grad.reshape(1,2)
         print('Iter {0:2d}, objective f: {1:.3f}, constraint g<=1: {2:1.3f}'.format(iter,f,g[0,0]))
-        #print("Iter: ",iter," f: ", f, "g: ", g[0,0])
         return f, df, g[0,0], dg
 
     def callback(xk):
