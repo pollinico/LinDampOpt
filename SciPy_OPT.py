@@ -1,6 +1,6 @@
 ''' 
-Nicolò Pollini, Feb. 2021
-Copenhagen, Denmark
+Nicolò Pollini, Jan. 2024
+Haifa, Israel
 '''
 #--------------------------------------
 # Import relevant modules:
@@ -33,8 +33,9 @@ def runOptimization(params):
     Str.Cs = np.dot(Str.H.T,np.dot(Str.Cs,Str.H))
     Opt.q = 100
     Opt.pnorm = 100
+    f0 = 1.0
     def objcon(x):
-        nonlocal Opt, Str, objHist, gHist, iter
+        nonlocal Opt, Str, objHist, gHist, iter, f0
         iter += 1
         # Update damping
         cd = Str.cdamp * x
@@ -47,20 +48,29 @@ def runOptimization(params):
         # Sensitivity analysis
         Opt.cal_sensitivity(Str)
         f = np.sum(x)
-        objHist.append(f)
         df = np.ones(2)
+        if iter == 1:
+            f0 = f
+            f = f/f0
+            df = df/f0
+        else:
+            f = f/f0
+            df = df/f0
+        objHist.append(f)
         g = Str.dc
         gHist.append(g[0,0])
         dg = Opt.grad.reshape(1,2)
-        print('Iter {0:2d}, objective f: {1:.3f}, constraint g<=1: {2:1.3f}'.format(iter,f,g[0,0]))
         return f, df, g[0,0], dg
-
+    
+    #callback(xk, OptimizeResult state) if trust-constr
     def callback(xk):
         nonlocal Opt
         # Continuation scheme
-        Opt.q = min(Opt.q+100, 1.0E3)
-        Opt.pnorm = min(Opt.pnorm+100, 1.0E3)
-        return True
+        if iter % 2 == 0:
+            Opt.q = min(Opt.q+100, 1.0E3)
+            Opt.pnorm = min(Opt.pnorm+100, 1.0E3)
+        print('Iter {0:2d}, objective f: {1:.3f}, constraint g<=1: {2:1.3f}, p: {3:.2f}, q: {4:.2f}'.format(iter, flast, glast, Opt.pnorm, Opt.q))
+        return False
 
     # ---- general code ----
     xlast = []
@@ -91,44 +101,68 @@ def runOptimization(params):
         return dglast
     # ----------------------
     nlc = NonlinearConstraint(con, lb=-np.inf, ub=1.0, jac=jac)
-    options = {'disp': True, 'ftol': 1e-7}
+    options = {'disp': True, 'ftol': 1e-5} # with SLSQP
+    #options = {'disp': True} # with trust-constr
     bounds = Bounds(lb, ub, keep_feasible=True)
-    sol = minimize(obj, x0, jac=True, constraints=nlc, options=options, bounds=bounds, callback=callback, method='SLSQP')
+    sol = minimize(obj, x0, jac=True, constraints=nlc, options=options, bounds=bounds, callback=callback, method='slsqp')
     print("x =", sol.x)
     print("f =", sol.fun)
     print("cd =", sol.x*Str.cdamp)
     print(sol.success)
-    return sol.x, sol.fun, objHist, gHist
+    return sol.x, sol.fun, objHist, gHist, Str
 
 # Main function
 if __name__ == "__main__":
-    x0 = [.95, .95]
+    x0 = [.9, .9]
     lb = [0., 0.]
     ub = [1., 1.]
     params = {'x0': x0, 
               'lb': lb,
               'ub': ub}
-    xopt, fopt, objHist, gHist = runOptimization(params)
+    xopt, fopt, objHist, gHist, Str = runOptimization(params)
 
-    plt.figure()
-    plt.plot(objHist/max(objHist), label='obj')
-    plt.plot(gHist, label='g')
-    plt.title("Normalized objective and drift constraint")
+    # Update damping
+    cd = Str.cdamp * xopt
+    Cd = np.diag(cd)
+    Str.C = Str.Cs + np.dot(Str.H.T,np.dot(Cd,Str.H))
+    # Forward time-history analysis
+    Str.time_hist()
+    drift = np.dot(Str.H, Str.disp)
+
+    fig = plt.figure()
+    plt.plot(Str.time, drift[0,:]*1e3, label='d1=u1', alpha=0.9, linewidth=2)
+    plt.plot(Str.time, drift[1,:]*1e3, label='d2=u2-u1', alpha=0.7, linewidth=2)
+    plt.plot(Str.time, 9*np.ones(len(Str.time)), "k--")
+    plt.plot(Str.time, -9*np.ones(len(Str.time)), "k--")
+    plt.title("Inter-story drifts in time with optimal damping")
+    plt.xlabel("time [s]")
+    plt.ylabel("d1, d2 [mm]")
     plt.legend()
+    fig.savefig('SLSQP_opt_d1d2.png', bbox_inches='tight', dpi=300)
+
+    fig = plt.figure()
+    plt.plot(objHist/max(objHist), label='obj=cd1+cd2', linewidth=2)
+    plt.plot(gHist, label='g<=1', linewidth=2)
+    plt.title("Normalized objective and drift constraint functions")
+    plt.legend()
+    fig.savefig('SLSQP_opt_iters.png', bbox_inches='tight', dpi=300)
     plt.show()
 #--------------------------------------
+    
 '''
-##%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-# This code was written by Nicolò Pollini,                                %
-# Department of Wind Energy,                                              %  
-# Technical University of Denmark.                                        %
-#                                                                         %
-# Contact: nicolo@alumni.technion.ac.il                                   %
-#                                                                         %
-#                                                                         %
-# Disclaimer:                                                             %
-# The author reserves all rights but does not guarantee that the code is  %
-# free from errors. Furthermore, the author shall not be liable in any    %
-# event caused by the use of the program.                                 %
-##%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% This code was written by Nicolò Pollini,                                %
+% Technion - Israel Institute of Technology                               %
+% https://mdo.net.technion.ac.il/                                         %
+%                                                                         %
+%                                                                         %
+% Contact: nicolo@technion.ac.il                                          %
+%                                                                         %
+% Code repository: https://github.com/pollinico/TopOpt_Wind_Farm          %
+%                                                                         %
+% Disclaimer:                                                             %
+% The author reserves all rights but does not guarantee that the code is  %
+% free from errors. Furthermore, the author shall not be liable in any    %
+% event caused by the use of the program.                                 %
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 '''
