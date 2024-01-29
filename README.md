@@ -22,4 +22,5 @@ Main file to be run: SciPy_OPT.py
 
 <img src="SLSQP_opt_iters.png" alt="Optimization history" style="height: 500px;"/>   
 
-![Optimized structural response](SLSQP_opt_d1d2.png)
+
+<img src="SLSQP_opt_d1d2.png" alt="Optimized structural response" style="height: 500px;"/>  
