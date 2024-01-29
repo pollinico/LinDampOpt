@@ -7,7 +7,10 @@ Both the dampers and the structure have a linear behavior.
 
 The structural response is calculated with a linear time-history analysis.   
 The maximum peak drift in time is constrained to a maximum allowed value (0.009 m).  
-The structure is subjected to a realistic ground acceleration record.   
+The structure is subjected to a realistic ground acceleration record (El Centro).   
+
+![El Centro](el_centro.png)
+
 The gradient is calculated with an adjoint method.  
 For details on the adjoint sensitivity analysis see:  
 
