@@ -18,4 +18,8 @@ For details on the response and adjoint sensitivity analyses see:
 Earthquake Engineering & Structural Dynamics, 49(15), 1599-1618.](https://onlinelibrary.wiley.com/doi/full/10.1002/eqe.3319)
   
   
-Main file to be run: SciPy_OPT.py
+Main file to be run: SciPy_OPT.py   
+
+![Optimization history](SLSQP_opt_iters.png)   
+
+![Optimized structural response](SLSQP_opt_d1d2.png)
