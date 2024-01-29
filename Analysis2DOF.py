@@ -1,6 +1,6 @@
 ''' 
-Nicolo Pollini, Feb 2021
-Copenhagen, Denmark
+Nicolò Pollini, Jan. 2024
+Haifa, Israel
 '''
 
 # Import packages and modules
@@ -14,9 +14,9 @@ import scipy.io as sio
 class DAMP_OPT:
     
     def __init__(self):
-        self.pnorm = 10
+        self.pnorm = 100
         self.dallow = 0.009
-        self.q = 10
+        self.q = 100
         
     def cal_sensitivity(self,Str):
         # Parameters
@@ -261,17 +261,19 @@ if __name__ == '__main__':
 	main(x)
 
 '''
-##%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-# This code was written by Nicolò Pollini,                                %
-# Department of Wind Energy,                                              %  
-# Technical University of Denmark.                                        %
-#                                                                         %
-# Contact: nicolo@alumni.technion.ac.il                                   %
-#                                                                         %
-#                                                                         %
-# Disclaimer:                                                             %
-# The author reserves all rights but does not guarantee that the code is  %
-# free from errors. Furthermore, the author shall not be liable in any    %
-# event caused by the use of the program.                                 %
-##%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% This code was written by Nicolò Pollini,                                %
+% Technion - Israel Institute of Technology                               %
+% https://mdo.net.technion.ac.il/                                         %
+%                                                                         %
+%                                                                         %
+% Contact: nicolo@technion.ac.il                                          %
+%                                                                         %
+% Code repository: https://github.com/pollinico/TopOpt_Wind_Farm          %
+%                                                                         %
+% Disclaimer:                                                             %
+% The author reserves all rights but does not guarantee that the code is  %
+% free from errors. Furthermore, the author shall not be liable in any    %
+% event caused by the use of the program.                                 %
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 '''
