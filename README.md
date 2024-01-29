@@ -1,6 +1,10 @@
-# Gradient-based transient optimization of added fluid viscous dampers for seismic retrofitting in Python  
+# Gradient-based transient optimization of added fluid viscous dampers for seismic retrofitting in Python    
+
 Gradient-based optimization of added fluid viscous dampers for the seismic retrofitting of a 2D shear frame with two degrees of freedom.     
-Both the dampers and the structure have a linear behavior.   
+Both the dampers and the structure have a linear behavior.     
+
+![2D shear frame with two degrees of freedom](2dof_shear.png)
+
 The structural response is calculated with a linear time-history analysis.   
 The maximum peak drift in time is constrained to a maximum allowed value (0.009 m).  
 The structure is subjected to a realistic ground acceleration record.   
