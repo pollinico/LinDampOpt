@@ -158,7 +158,7 @@ if __name__ == "__main__":
 %                                                                         %
 % Contact: nicolo@technion.ac.il                                          %
 %                                                                         %
-% Code repository: https://github.com/pollinico/TopOpt_Wind_Farm          %
+% Code repository: https://github.com/pollinico/LinDampOpt                %
 %                                                                         %
 % Disclaimer:                                                             %
 % The author reserves all rights but does not guarantee that the code is  %
